@@ -6,7 +6,7 @@
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/20 12:26:56 by jbennink       #+#    #+#                */
-/*   Updated: 2020/03/06 14:54:08 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/03/06 18:45:22 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int		keysrelease(int keycode, t_var *var)
 		var->pressed[5] = 0;
 	if (keycode == 49)
 	{
-		var->player.spdmove = 0.05;
-		var->player.spdrot = 0.05;
+		var->player.spdmove = var->basespeed * 0.05;
+		var->player.spdrot = var->basespeed * 0.02;
 	}
 	return (1);
 }
@@ -48,4 +48,10 @@ void	movement(t_var *var)
 		key_left(&*var);
 	if (var->pressed[5] == 1)
 		key_right(&*var);
+	if (var->map.maparray[(int)var->player.pos.y][(int)var->player.pos.x] == 2)
+	{
+		var->player.hp -= 5;
+		var->map.maparray[(int)var->player.pos.y][(int)var->player.pos.x] = 0;
+		var->sprites.locs[var->sprites.order[0]].x = 0;
+	}
 }

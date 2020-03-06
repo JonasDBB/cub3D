@@ -6,7 +6,7 @@
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/14 14:25:15 by jbennink       #+#    #+#                */
-/*   Updated: 2020/03/06 14:54:17 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/03/06 16:17:37 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,10 @@ static void	createline(t_var *var, int i)
 			var->map.maparray[i][j] = -2;
 			var->map.arraycpy[i][j] = -2;
 		}
-		else if (var->map.line[k] == 'N' || var->map.line[k] == 'E' ||
-					var->map.line[k] == 'S' || var->map.line[k] == 'W')
+		else if (ft_strchr("NSEW", var->map.line[k]))
 			setplayer(&*var, i, j, k);
+		else if (var->map.line[k] > '2')
+			errormsg("wrong shit in map");
 		else
 		{
 			var->map.maparray[i][j] = var->map.line[k] - '0';

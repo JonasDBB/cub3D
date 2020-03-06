@@ -6,17 +6,47 @@
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/28 15:50:26 by jbennink       #+#    #+#                */
-/*   Updated: 2020/03/06 14:54:01 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/03/06 19:17:21 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+static void	deathscreen(t_var *var)
+{
+	t_data	img;
+	int		x;
+	int		y;
+
+	img.img = mlx_new_image(var->mlx, var->width, var->height);
+	img.addr = mlx_get_data_addr(img.img, &img.bpp,
+									&img.line_length, &img.endian);
+	y = 0;
+	while (y < var->height)
+	{
+		x = 0;
+		while (x < var->width)
+		{
+			pxdraw(img, x, y, 0x000000);
+			x++;
+		}
+		y++;
+	}
+	mlx_put_image_to_window(var->mlx, var->win, img.img, 0, 0);
+	mlx_string_put(var->mlx, var->win, var->width * 0.5,
+					var->height * 0.5, 0xFF0000, "YOU DIED");
+}
 
 static int	renderframe(t_var *var)
 {
 	t_data	img;
 
 	movement(&*var);
+	if (var->dead == 1)
+	{
+		sleep(2);
+		exit(1);
+	}
 	if (var->player.moved == 0)
 		return (1);
 	img.img = mlx_new_image(var->mlx, var->width, var->height);
@@ -27,24 +57,19 @@ static int	renderframe(t_var *var)
 	drawsprites(&*var, &img, var->tex.sp);
 	drawminimap(&*var, &img);
 	mlx_put_image_to_window(var->mlx, var->win, img.img, 0, 0);
+	if (var->player.hp <= 0)
+	{
+		deathscreen(*&var);
+		var->dead = 1;
+	}
 	var->player.moved = 0;
 	return (1);
 }
 
-static void	texinc(char **texturepath, int i)
-{
-	(*texturepath) += i;
-	while (**texturepath == ' ')
-		(*texturepath)++;
-}
-
 static void	createtexture(t_var *var)
 {
-	texinc(&var->input.notexture, 2);
-	texinc(&var->input.eatexture, 2);
-	texinc(&var->input.sotexture, 2);
-	texinc(&var->input.wetexture, 2);
-	texinc(&var->input.spritetex, 1);
+	preptextures(*&var);
+	checkpaths(var->input);
 	var->tex.no.img = mlx_png_file_to_image(var->mlx,
 			var->input.notexture, &var->tex.no.texw, &var->tex.no.texh);
 	var->tex.no.addr = mlx_get_data_addr(var->tex.no.img,
@@ -80,10 +105,14 @@ static void	setup(t_var *var, char *s)
 	readmap(&*var);
 	var->player.pos.x += 0.5;
 	var->player.pos.y += 0.5;
-	var->player.spdmove = 0.05;
-	var->player.spdrot = 0.025;
+	var->basespeed = 1;
+	var->sprint = 3;
+	var->player.spdmove = var->basespeed * 0.05;
+	var->player.spdrot = var->basespeed * 0.02;
 	var->player.moved = 1;
-	var->mapscale = 35;
+	var->mapscale = 28;
+	var->player.hp = 100;
+	var->dead = 0;
 	setup_sprites(&*var);
 	var->mlx = mlx_init();
 	createtexture(&*var);

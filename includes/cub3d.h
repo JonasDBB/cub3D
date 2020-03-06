@@ -6,7 +6,7 @@
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/14 14:20:38 by jbennink       #+#    #+#                */
-/*   Updated: 2020/03/06 14:46:30 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/03/06 16:40:22 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@
 # include "keys.h"
 # include "drawing.h"
 
-void	sysend(void);
+/*
+**void	sysend(void);
+*/
 void	errormsg(char *reason);
+void	preptextures(t_var *var);
+void	checkpaths(t_input input);
 
 #endif

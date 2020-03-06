@@ -6,7 +6,7 @@
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/19 14:55:19 by jbennink       #+#    #+#                */
-/*   Updated: 2020/03/06 14:53:48 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/03/06 15:59:33 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ int			keyspress(int keycode, t_var *var)
 		var->pressed[5] = 1;
 	if (keycode == 49)
 	{
-		var->player.spdmove = 0.15;
-		var->player.spdrot = 0.08;
+		var->player.spdmove = var->basespeed * 0.05 * var->sprint;
+		var->player.spdrot = var->basespeed * 0.02 * var->sprint;
 	}
 	return (1);
 }
@@ -48,7 +48,6 @@ int			keyspress(int keycode, t_var *var)
 int			key_escape(t_var *var)
 {
 	mlx_destroy_window(var->mlx, var->win);
-	sysend();
 	exit(1);
 	return (0);
 }

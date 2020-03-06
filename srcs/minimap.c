@@ -6,7 +6,7 @@
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/20 11:00:22 by jbennink       #+#    #+#                */
-/*   Updated: 2020/03/06 14:54:04 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/03/06 18:08:21 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,30 @@ static void			drawmap(t_var *var, t_data *img, t_minimap *mini)
 		mini->i++;
 }
 
+static void			drawlife(t_var var, t_data *img)
+{
+	int				x;
+	int				y;
+	unsigned int	clr;
+	int				redhp;
+
+	y = var.height * 0.9;
+	redhp = (var.width * 0.4 / 100) * var.player.hp + (var.width * 0.3) - 1;
+	while (y < var.height * 0.95)
+	{
+		x = var.width * 0.3;
+		clr = 0x00FF00;
+		while (x < var.width * 0.7)
+		{
+			if (x > redhp)
+				clr = 0xFF0000;
+			pxdraw(*img, x, y, clr);
+			x++;
+		}
+		y++;
+	}
+}
+
 void				drawminimap(t_var *var, t_data *img)
 {
 	t_minimap	mini;
@@ -67,4 +91,5 @@ void				drawminimap(t_var *var, t_data *img)
 		mini.i = 0;
 	while (mini.y < mini.maxsqh * mini.sqwidth + mini.offset)
 		drawmap(&*var, &*img, &mini);
+	drawlife(*var, &*img);
 }

@@ -6,7 +6,7 @@
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/14 14:42:55 by jbennink       #+#    #+#                */
-/*   Updated: 2020/03/05 11:51:56 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/03/06 19:07:09 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct	s_player {
 	double	spdmove;
 	double	spdrot;
 	int		moved;
+	int		hp;
 }				t_player;
 
 typedef struct	s_cast {
@@ -116,10 +117,14 @@ typedef struct	s_var {
 	int			height;
 	t_player	player;
 	int			mapscale;
+	int			basespeed;
+	int			sprint;
 	int			pressed[6];
 	t_textures	tex;
 	t_sprites	sprites;
 	double		*zbuffer;
+	int			dead;
+	int			mousex;
 }				t_var;
 
 typedef struct	s_minimap {

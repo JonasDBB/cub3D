@@ -1,9 +1,9 @@
 R 1920 1080
-NO ../pics/redbrick.png
-SO ../pics/colorstone.png
-WE ../pics/bluestone.png
-EA ../pics/purplestone.png
-S ../pics/barrel.png
+NO ./pics/redbrick.png
+SO ./pics/colorstone.png
+WE ./pics/bluestone.png
+EA ./pics/purplestone.png
+S ./pics/barrel.png
 
 F 116,102,59
 C 63,91,132

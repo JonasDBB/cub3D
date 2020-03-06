@@ -6,7 +6,7 @@
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/03/06 13:43:19 by jbennink       #+#    #+#                */
-/*   Updated: 2020/03/06 14:53:13 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/03/06 16:12:58 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	writeheader(t_var var, int fd)
 	s[1] = 0x4D;
 	wid = var.width;
 	padding = 0;
-	while ((wid + padding) % 4 != 0)
+	while ((3 * wid + padding) % 4 != 0)
 		padding++;
 	s[2] = 3 * (wid + padding) * var.height + 54;
 	s[10] = 54;
