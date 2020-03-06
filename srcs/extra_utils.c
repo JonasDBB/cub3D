@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   cub3d.h                                            :+:    :+:            */
+/*   extra_utils.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/02/14 14:20:38 by jbennink       #+#    #+#                */
-/*   Updated: 2020/02/19 16:19:55 by jbennink      ########   odam.nl         */
+/*   Created: 2020/03/05 11:41:54 by jbennink       #+#    #+#                */
+/*   Updated: 2020/03/06 15:06:22 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
-# include <fcntl.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <math.h>
-# include "../minilibx_mms_20191207_beta/mlx.h"
-# include "../libft/libft.h"
-# include "structs.h"
-# include "parser.h"
-# include "keys.h"
-# include "drawing.h"
+#include "../includes/cub3d.h"
 
-void	setdir(t_var *var);
-
-//remove this
-void	printarray(t_var var);
-void	printcpy(t_var var);
-
-#endif
+void		errormsg(char *reason)
+{
+	write(1, "Error\n", 6);
+	ft_putstr_fd("reason: ", 1);
+	ft_putstr_fd(reason, 1);
+	write(1, "\n", 1);
+	exit(0);
+}
+/*
+**function to conveniently show leaks, called just before exit
+**void		sysend(void)
+**{
+**	system("leaks a.out >> leaks.txt");
+**	system("grep \"total leaked bytes\" leaks.txt");
+**	system("rm leaks.txt");
+**}
+*/

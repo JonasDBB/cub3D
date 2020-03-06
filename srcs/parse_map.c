@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   parsemap5.c                                        :+:    :+:            */
+/*   parse_map.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/14 14:25:15 by jbennink       #+#    #+#                */
-/*   Updated: 2020/02/20 11:17:51 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/03/06 14:54:17 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../includes/cub3d.h"
 
-void	setplayer(t_var *var, int i, int j, int k)
+static void	setplayer(t_var *var, int i, int j, int k)
 {
 	if (var->player.pos.x != -1)
 		errormsg("too many players");
@@ -24,7 +24,7 @@ void	setplayer(t_var *var, int i, int j, int k)
 	setdir(&*var);
 }
 
-void	linefinish(t_var *var, int i, int j)
+static void	linefinish(t_var *var, int i, int j)
 {
 	while (j < var->map.maxw)
 	{
@@ -37,21 +37,20 @@ void	linefinish(t_var *var, int i, int j)
 	free(var->map.line);
 }
 
-void	createline(t_var *var, int i)
+static void	createline(t_var *var, int i)
 {
 	int	j;
 	int	k;
 
-	var->map.maparray[i] = malloc(sizeof(int) * var->map.maxw + 1);
-	var->map.arraycpy[i] = malloc(sizeof(int) * var->map.maxw + 1);
 	j = 0;
 	k = 0;
 	while (var->map.line[k])
 	{
-		while (var->map.line[k] == ' ')
-			k++;
-		if (!var->map.line[k])
-			break ;
+		if (var->map.line[k] == ' ')
+		{
+			var->map.maparray[i][j] = -2;
+			var->map.arraycpy[i][j] = -2;
+		}
 		else if (var->map.line[k] == 'N' || var->map.line[k] == 'E' ||
 					var->map.line[k] == 'S' || var->map.line[k] == 'W')
 			setplayer(&*var, i, j, k);
@@ -66,11 +65,13 @@ void	createline(t_var *var, int i)
 	linefinish(&*var, i, j);
 }
 
-void	gotomap(t_var *var)
+static void	gotomap(t_var *var)
 {
+	var->map.maparray = malloc(sizeof(int*) * var->map.h);
+	var->map.arraycpy = malloc(sizeof(int*) * var->map.h);
 	var->map.fd = open(var->map.file, O_RDONLY);
 	get_next_line(var->map.fd, &(var->map.line));
-	while (!ft_isdigit(var->map.line[0]))
+	while (!mapline(*var))
 	{
 		free(var->map.line);
 		get_next_line(var->map.fd, &(var->map.line));
@@ -78,7 +79,7 @@ void	gotomap(t_var *var)
 	var->player.pos.x = -1;
 }
 
-void	readmap(t_var *var)
+void		readmap(t_var *var)
 {
 	int	i;
 	int	gnl;
@@ -87,11 +88,11 @@ void	readmap(t_var *var)
 	i = 0;
 	gnl = 1;
 	check = 0;
-	var->map.maparray = malloc(sizeof(int*) * var->map.h);
-	var->map.arraycpy = malloc(sizeof(int*) * var->map.h);
 	gotomap(&*var);
-	while (ft_isdigit(var->map.line[0]))
+	while (mapline(*var))
 	{
+		var->map.maparray[i] = malloc(sizeof(int) * var->map.maxw + 1);
+		var->map.arraycpy[i] = malloc(sizeof(int) * var->map.maxw + 1);
 		createline(&*var, i);
 		gnl = gnl == 1 ? get_next_line(var->map.fd, &(var->map.line)) : gnl;
 		if (gnl != 1)

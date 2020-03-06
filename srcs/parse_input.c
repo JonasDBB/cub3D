@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   parseinput.c                                       :+:    :+:            */
+/*   parse_input.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/14 14:23:43 by jbennink       #+#    #+#                */
-/*   Updated: 2020/02/19 13:28:21 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/03/06 14:54:13 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../includes/cub3d.h"
 
-void	fillinput(t_var *var)
+static void	fillinput(t_var *var)
 {
 	if (var->map.line[0] == 'R')
 		setres(&*var);
@@ -34,7 +34,22 @@ void	fillinput(t_var *var)
 		errormsg("unknown input");
 }
 
-void	getlines(t_var *var)
+static int	mapstart(t_var *var)
+{
+	int	i;
+
+	i = 0;
+	while (var->map.line[i] == ' ')
+		i++;
+	if (var->map.line[i] >= '0' && var->map.line[i] <= '2')
+	{
+		getwidth(*&var);
+		return (1);
+	}
+	return (0);
+}
+
+static void	getlines(t_var *var)
 {
 	var->input.notexture = NULL;
 	var->input.eatexture = NULL;
@@ -43,45 +58,24 @@ void	getlines(t_var *var)
 	var->input.spritetex = NULL;
 	var->input.clrceiling = -1;
 	var->input.clrfloor = -1;
-	while (get_next_line(var->map.fd, &(var->map.line)) == 1
-			&& var->map.line[0] != '1')
+	while (get_next_line(var->map.fd, &(var->map.line)) == 1)
 	{
+		if (mapstart(*&var))
+			return ;
 		while (var->map.line[0] == '\0')
 		{
 			free(var->map.line);
 			get_next_line(var->map.fd, &(var->map.line));
 		}
-		if (var->map.line[0] >= '0' && var->map.line[0] <= '2')
-		{
-			getwidth(*&var);
+		if (mapstart(*&var))
 			return ;
-		}
 		fillinput(&*var);
 		free(var->map.line);
 	}
 	free(var->map.line);
 }
 
-void	getwidth(t_var *var)
-{
-	int	maxw;
-	int	i;
-
-	maxw = 0;
-	i = 0;
-	while (var->map.line[i])
-	{
-		if (var->map.line[i] != ' ')
-			maxw++;
-		i++;
-	}
-	if (maxw > var->map.maxw)
-		var->map.maxw = maxw;
-	var->map.h++;
-	free(var->map.line);
-}
-
-void	checkend(t_var *var)
+static void	checkend(t_var *var)
 {
 	int	gnl;
 	int	i;
@@ -102,7 +96,7 @@ void	checkend(t_var *var)
 	free(var->map.line);
 }
 
-void	readinput(t_var *var)
+void		readinput(t_var *var)
 {
 	int	gnl;
 

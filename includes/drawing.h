@@ -6,7 +6,7 @@
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/19 16:08:13 by jbennink       #+#    #+#                */
-/*   Updated: 2020/02/20 14:13:53 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/03/06 15:04:41 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,18 @@
 # define DRAWING_H
 # include "cub3d.h"
 
+/*
+**raycast.c, drawray.c, drawspprite.c, minimap.c, sprites.c
+*/
+
 void	pxdraw(t_data data, int x, int y, int color);
-int		renderframe(t_var *var);
-
-unsigned int	lightendarken(int col, int n);
-
 void	drawminimap(t_var *var, t_data *img);
-
 void	drawimg(t_var *var, t_data *img);
-void	getdist(t_var *var, t_cast *caster, t_coord *side_d, t_coord delta_d);
-int		findhit(t_var *var, t_cast *caster, t_coord *side_d, t_coord delta_d);
-void	getheight(t_var *var, t_cast *caster);
-void	drawray(t_var *var, t_data *img, t_cast caster);
-
+void	drawray(t_var *var, t_data *img, t_cast caster, t_data texture);
 void	drawminimap(t_var *var, t_data *img);
+void	drawsprites(t_var *var, t_data *img, t_data texture);
+void	createbmp(t_var var);
+void	setup_sprites(t_var *var);
+void	sortdist(t_var *var);
 
 #endif

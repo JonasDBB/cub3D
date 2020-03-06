@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   keys_main5.c                                       :+:    :+:            */
+/*   keys_main.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/19 14:55:19 by jbennink       #+#    #+#                */
-/*   Updated: 2020/02/20 14:14:51 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/03/06 14:53:48 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../includes/cub3d.h"
 
-int		keyspress(int keycode, t_var *var)
+static void	rotatevector(t_coord *vector, double speed)
+{
+	double oldx;
+
+	oldx = vector->x;
+	vector->x = vector->x * cos(speed) - vector->y * sin(speed);
+	vector->y = oldx * sin(speed) + vector->y * cos(speed);
+}
+
+int			keyspress(int keycode, t_var *var)
 {
 	if (keycode == 53)
 		key_escape(&*var);
@@ -30,22 +39,13 @@ int		keyspress(int keycode, t_var *var)
 		var->pressed[5] = 1;
 	if (keycode == 49)
 	{
-		var->player.spdmove = 0.1;
+		var->player.spdmove = 0.15;
 		var->player.spdrot = 0.08;
 	}
 	return (1);
 }
 
-void	rotatevector(t_coord *vector, double speed)
-{
-	double oldx;
-
-	oldx = vector->x;
-	vector->x = vector->x * cos(speed) - vector->y * sin(speed);
-	vector->y = oldx * sin(speed) + vector->y * cos(speed);
-}
-
-int		key_escape(t_var *var)
+int			key_escape(t_var *var)
 {
 	mlx_destroy_window(var->mlx, var->win);
 	sysend();
@@ -53,14 +53,14 @@ int		key_escape(t_var *var)
 	return (0);
 }
 
-void	key_left(t_var *var)
+void		key_left(t_var *var)
 {
 	rotatevector(&(var->player.dir), var->player.spdrot);
 	rotatevector(&(var->player.plane), var->player.spdrot);
 	var->player.moved = 1;
 }
 
-void	key_right(t_var *var)
+void		key_right(t_var *var)
 {
 	rotatevector(&(var->player.dir), -1 * var->player.spdrot);
 	rotatevector(&(var->player.plane), -1 * var->player.spdrot);

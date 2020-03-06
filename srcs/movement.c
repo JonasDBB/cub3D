@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   movement2.c                                        :+:    :+:            */
+/*   movement.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/20 12:26:56 by jbennink       #+#    #+#                */
-/*   Updated: 2020/02/20 14:09:24 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/03/06 14:54:08 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../includes/cub3d.h"
 
 int		keysrelease(int keycode, t_var *var)
 {

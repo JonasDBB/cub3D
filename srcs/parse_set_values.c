@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   parsesetvalues5.c                                  :+:    :+:            */
+/*   parse_set_values.c                                 :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/17 16:51:57 by jbennink       #+#    #+#                */
-/*   Updated: 2020/02/20 15:01:33 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/03/06 14:54:22 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../includes/cub3d.h"
 
 void	setres(t_var *var)
 {
@@ -63,12 +63,12 @@ void	setcolor(char *line, int *clr, int i)
 		i++;
 	r = ft_atoi(line + i);
 	i += digits(r);
-	if (line[i] != ',')
+	if (line[i] != ',' || !ft_isdigit(line[i + 1]))
 		errormsg("comma issue color");
 	i++;
 	g = ft_atoi(line + i);
 	i += digits(g);
-	if (line[i] != ',')
+	if (line[i] != ',' || !ft_isdigit(line[i + 1]))
 		errormsg("comma issue color");
 	i++;
 	b = ft_atoi(line + i);

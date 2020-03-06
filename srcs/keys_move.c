@@ -6,11 +6,11 @@
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/19 15:03:51 by jbennink       #+#    #+#                */
-/*   Updated: 2020/02/19 15:34:57 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/03/06 14:53:53 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../includes/cub3d.h"
 
 static int	get_value_at(t_var *var, double y, double x)
 {

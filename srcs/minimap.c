@@ -6,15 +6,29 @@
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/20 11:00:22 by jbennink       #+#    #+#                */
-/*   Updated: 2020/02/20 11:10:42 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/03/06 14:54:04 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../includes/cub3d.h"
 
-static void	drawmap(t_var *var, t_data *img, t_minimap *mini)
+static unsigned int	getclr(t_var var, t_minimap mini, int j)
 {
-	int	j;
+	if (mini.i == (int)var.player.pos.y && j == (int)var.player.pos.x)
+		return (0xFF0000);
+	if (var.map.maparray[mini.i][j] == 0)
+		return (0xFFFFFF);
+	if (var.map.maparray[mini.i][j] == 2)
+		return (0xFFE73C);
+	if (var.map.maparray[mini.i][j] == 1 || var.map.maparray[mini.i][j] == -2)
+		return (0x000000);
+	return (0xFF00FF);
+}
+
+static void			drawmap(t_var *var, t_data *img, t_minimap *mini)
+{
+	int				j;
+	unsigned int	clr;
 
 	mini->x = var->width - (mini->maxsqw * mini->sqwidth + mini->offset);
 	j = (int)var->player.pos.x - 5;
@@ -24,13 +38,8 @@ static void	drawmap(t_var *var, t_data *img, t_minimap *mini)
 		j = var->map.maxw - mini->maxsqw;
 	while (mini->x < var->width - mini->offset)
 	{
-		if (var->map.maparray[mini->i][j] == 0 ||
-			var->map.maparray[mini->i][j] == 2)
-			pxdraw(*img, mini->x, mini->y, 0xFFFFFF);
-		if (mini->i == (int)var->player.pos.y && j == (int)var->player.pos.x)
-			pxdraw(*img, mini->x, mini->y, 0xFF0000);
-		if (var->map.maparray[mini->i][j] == 1)
-			pxdraw(*img, mini->x, mini->y, 0x000000);
+		clr = getclr(*var, *mini, j);
+		pxdraw(*img, mini->x, mini->y, clr);
 		mini->x++;
 		if ((mini->x - (var->width - (mini->maxsqw *
 			mini->sqwidth + mini->offset))) % mini->sqwidth == 0)
@@ -41,7 +50,7 @@ static void	drawmap(t_var *var, t_data *img, t_minimap *mini)
 		mini->i++;
 }
 
-void		drawminimap(t_var *var, t_data *img)
+void				drawminimap(t_var *var, t_data *img)
 {
 	t_minimap	mini;
 
