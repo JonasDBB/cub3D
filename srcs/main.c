@@ -6,35 +6,22 @@
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/28 15:50:26 by jbennink       #+#    #+#                */
-/*   Updated: 2020/03/06 19:17:21 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/03/09 15:36:46 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+#include <stdio.h>
 
-static void	deathscreen(t_var *var)
+static void	dead(t_var *var)
 {
-	t_data	img;
-	int		x;
-	int		y;
-
-	img.img = mlx_new_image(var->mlx, var->width, var->height);
-	img.addr = mlx_get_data_addr(img.img, &img.bpp,
-									&img.line_length, &img.endian);
-	y = 0;
-	while (y < var->height)
+	var->player.moved = 0;
+	var->dead++;
+	if (var->dead > 5)
 	{
-		x = 0;
-		while (x < var->width)
-		{
-			pxdraw(img, x, y, 0x000000);
-			x++;
-		}
-		y++;
+		sleep(2);
+		exit(1);
 	}
-	mlx_put_image_to_window(var->mlx, var->win, img.img, 0, 0);
-	mlx_string_put(var->mlx, var->win, var->width * 0.5,
-					var->height * 0.5, 0xFF0000, "YOU DIED");
 }
 
 static int	renderframe(t_var *var)
@@ -42,11 +29,8 @@ static int	renderframe(t_var *var)
 	t_data	img;
 
 	movement(&*var);
-	if (var->dead == 1)
-	{
-		sleep(2);
-		exit(1);
-	}
+	if (var->dead > 0)
+		dead(*&var);
 	if (var->player.moved == 0)
 		return (1);
 	img.img = mlx_new_image(var->mlx, var->width, var->height);
@@ -58,10 +42,8 @@ static int	renderframe(t_var *var)
 	drawminimap(&*var, &img);
 	mlx_put_image_to_window(var->mlx, var->win, img.img, 0, 0);
 	if (var->player.hp <= 0)
-	{
-		deathscreen(*&var);
-		var->dead = 1;
-	}
+		mlx_put_image_to_window(var->mlx, var->win,
+						deathscreen(*&var).img, 0, 0);
 	var->player.moved = 0;
 	return (1);
 }
@@ -101,6 +83,7 @@ static void	setup(t_var *var, char *s)
 		errormsg("inputfile not .cub");
 	var->map.file = s;
 	var->sprites.count = 0;
+	mlx_get_screen_size(var->mlx, &var->screenres.x, &var->screenres.y);
 	readinput(&*var);
 	readmap(&*var);
 	var->player.pos.x += 0.5;
@@ -124,12 +107,17 @@ int			main(int ac, char **av)
 
 	if (ac < 2 || ac > 3)
 		errormsg("wrong number of arguments");
-	setup(&var, av[1]);
-	var.zbuffer = malloc(sizeof(double) * var.width);
+	var.save = 0;
 	if (ac == 3)
 	{
 		if (ft_strncmp(av[2], "--save", 6))
 			errormsg("wrong argument");
+		var.save = 1;
+	}
+	setup(&var, av[1]);
+	var.zbuffer = malloc(sizeof(double) * var.width);
+	if (var.save)
+	{
 		createbmp(var);
 		return (1);
 	}

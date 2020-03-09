@@ -6,7 +6,7 @@
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/14 14:20:38 by jbennink       #+#    #+#                */
-/*   Updated: 2020/03/06 16:40:22 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/03/09 15:09:17 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <math.h>
-# include "../minilibx_mms_20191207_beta/mlx.h"
+# include "../minilibx_mms_20200219/mlx.h"
 # include "../libft/libft.h"
 # include "structs.h"
 # include "parser.h"
@@ -26,8 +26,9 @@
 /*
 **void	sysend(void);
 */
-void	errormsg(char *reason);
-void	preptextures(t_var *var);
-void	checkpaths(t_input input);
+void		errormsg(char *reason);
+void		preptextures(t_var *var);
+void		checkpaths(t_input input);
+t_data		deathscreen(t_var *var);
 
 #endif

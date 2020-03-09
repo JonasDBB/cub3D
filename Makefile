@@ -6,7 +6,7 @@
 #    By: jbennink <jbennink@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/03/06 15:08:36 by jbennink       #+#    #+#                 #
-#    Updated: 2020/03/06 18:08:38 by jbennink      ########   odam.nl          #
+#    Updated: 2020/03/09 15:36:21 by jbennink      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ LIBFT = libft/libft.a
 
 MINILIB = libmlx.dylib
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -O3
 
 INCLUDES = includes/
 
@@ -55,7 +55,7 @@ clean:
 	rm -f $(OBJS)
 	rm -r objects/
 	cd libft && $(MAKE) clean
-	cd minilibx_mms_20191207_beta && $(MAKE) clean
+	cd minilibx_mms_20200219 && $(MAKE) clean
 
 fclean: clean
 	rm -f $(NAME)
@@ -70,5 +70,5 @@ $(LIBFT):
 	cd libft && $(MAKE) all
 
 $(MINILIB):
-	cd minilibx_mms_20191207_beta && $(MAKE)
-	cp minilibx_mms_20191207_beta/$(MINILIB) .
+	cd minilibx_mms_20200219 && $(MAKE)
+	cp minilibx_mms_20200219/$(MINILIB) .

@@ -6,7 +6,7 @@
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/20 19:47:02 by jbennink       #+#    #+#                */
-/*   Updated: 2020/03/06 14:53:18 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/03/09 15:33:28 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,45 @@ void		drawray(t_var *var, t_data *img, t_cast caster, t_data texture)
 		pxdraw(*img, caster.x, y, var->input.clrfloor);
 		y++;
 	}
+}
+
+static void	createimgs(t_var *var, t_data *img, t_data *youdied)
+{
+	var->dead = 1;
+	img->img = mlx_new_image(var->mlx, var->width, var->height);
+	img->addr = mlx_get_data_addr(img->img, &img->bpp,
+									&img->line_length, &img->endian);
+	youdied->img = mlx_png_file_to_image(var->mlx, "./pics/youdied.png",
+									&youdied->texw, &youdied->texh);
+	youdied->addr = mlx_get_data_addr(youdied->img, &youdied->bpp,
+									&youdied->line_length, &youdied->endian);
+}
+
+t_data		deathscreen(t_var *var)
+{
+	t_data			img;
+	t_intcrd		c;
+	t_data			youdied;
+	unsigned int	clr;
+	t_intcrd		tex;
+
+	createimgs(*&var, &img, &youdied);
+	c.y = 0;
+	while (c.y < var->height)
+	{
+		c.x = 0;
+		tex.y = (int)((((c.y * youdied.texw) / var->height)
+								* youdied.texh) / youdied.texw);
+		while (c.x < var->width)
+		{
+			tex.x = (int)((((c.x * youdied.texh) /
+						var->width) * youdied.texw) / youdied.texh);
+			clr = *(unsigned int*)(youdied.addr + (tex.y * youdied.line_length
+									+ tex.x * (youdied.bpp / 8)));
+			pxdraw(img, c.x, c.y, clr);
+			c.x++;
+		}
+		c.y++;
+	}
+	return (img);
 }

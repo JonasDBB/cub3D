@@ -6,7 +6,7 @@
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/17 16:51:57 by jbennink       #+#    #+#                */
-/*   Updated: 2020/03/06 14:54:22 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/03/09 15:20:38 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ void	setres(t_var *var)
 	while (var->map.line[i] == ' ')
 		i++;
 	var->width = ft_atoi(var->map.line + i);
-	if (var->width > 2560)
-		var->width = 2560;
+	if (var->width > var->screenres.x && !var->save)
+		var->width = var->screenres.x;
 	while (var->map.line[i] != ' ')
 		i++;
 	while (var->map.line[i] == ' ')
 		i++;
 	var->height = ft_atoi(var->map.line + i);
-	if (var->height > 1395)
-		var->height = 1395;
+	if (var->height > var->screenres.y - 45 && !var->save)
+		var->height = var->screenres.y - 45;
 }
 
 void	settexture(char **dst, char *src, int i)
