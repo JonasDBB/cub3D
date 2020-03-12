@@ -6,7 +6,7 @@
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/14 14:26:12 by jbennink       #+#    #+#                */
-/*   Updated: 2020/03/06 14:54:32 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/03/10 13:47:34 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,7 @@ void		getwidth(t_var *var)
 	i = 0;
 	while (var->map.line[i])
 	{
-		if (var->map.line[i] != ' ')
-			maxw++;
+		maxw++;
 		i++;
 	}
 	if (maxw > var->map.maxw)

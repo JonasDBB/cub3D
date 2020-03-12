@@ -6,7 +6,7 @@
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/28 15:50:26 by jbennink       #+#    #+#                */
-/*   Updated: 2020/03/09 15:36:46 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/03/10 15:41:24 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void	dead(t_var *var)
 	if (var->dead > 5)
 	{
 		sleep(2);
+		mlx_destroy_window(var->mlx, var->win);
 		exit(1);
 	}
 }
@@ -45,6 +46,7 @@ static int	renderframe(t_var *var)
 		mlx_put_image_to_window(var->mlx, var->win,
 						deathscreen(*&var).img, 0, 0);
 	var->player.moved = 0;
+	mlx_destroy_image(var->mlx, img.img);
 	return (1);
 }
 
@@ -94,7 +96,7 @@ static void	setup(t_var *var, char *s)
 	var->player.spdrot = var->basespeed * 0.02;
 	var->player.moved = 1;
 	var->mapscale = 28;
-	var->player.hp = 100;
+	var->player.hp = 5;
 	var->dead = 0;
 	setup_sprites(&*var);
 	var->mlx = mlx_init();

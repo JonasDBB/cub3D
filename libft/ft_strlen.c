@@ -6,7 +6,7 @@
 /*   By: jbennink <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/28 13:29:17 by jbennink       #+#    #+#                */
-/*   Updated: 2019/10/30 11:42:15 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/03/10 15:17:53 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ size_t	ft_strlen(const char *c)
 {
 	size_t i;
 
+	if (c == NULL)
+		return (0);
 	i = 0;
 	while (c[i])
 		i++;
