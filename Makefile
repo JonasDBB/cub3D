@@ -6,7 +6,7 @@
 #    By: jbennink <jbennink@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/03/06 15:08:36 by jbennink       #+#    #+#                 #
-#    Updated: 2020/03/10 14:02:22 by jbennink      ########   odam.nl          #
+#    Updated: 2020/03/12 17:17:50 by jbennink      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,6 @@ $(NAME): $(MINILIB) $(LIBFT) $(OBJS)
 
 clean:
 	rm -f $(OBJS)
-	rm -r objects/
 	cd libft && $(MAKE) clean
 	cd minilibx_mms_20200219 && $(MAKE) clean
 

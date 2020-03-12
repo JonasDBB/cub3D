@@ -6,7 +6,7 @@
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/28 15:50:26 by jbennink       #+#    #+#                */
-/*   Updated: 2020/03/10 15:41:24 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/03/12 17:14:40 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static void	setup(t_var *var, char *s)
 	var->player.spdrot = var->basespeed * 0.02;
 	var->player.moved = 1;
 	var->mapscale = 28;
-	var->player.hp = 5;
+	var->player.hp = 100;
 	var->dead = 0;
 	setup_sprites(&*var);
 	var->mlx = mlx_init();

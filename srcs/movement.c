@@ -6,7 +6,7 @@
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/20 12:26:56 by jbennink       #+#    #+#                */
-/*   Updated: 2020/03/06 18:45:22 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/03/12 17:16:07 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	movement(t_var *var)
 		key_right(&*var);
 	if (var->map.maparray[(int)var->player.pos.y][(int)var->player.pos.x] == 2)
 	{
-		var->player.hp -= 5;
+		var->player.hp -= 20;
 		var->map.maparray[(int)var->player.pos.y][(int)var->player.pos.x] = 0;
 		var->sprites.locs[var->sprites.order[0]].x = 0;
 	}
