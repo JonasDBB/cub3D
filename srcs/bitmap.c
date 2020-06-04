@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/03/06 13:43:19 by jbennink       #+#    #+#                */
-/*   Updated: 2020/03/06 16:12:58 by jbennink      ########   odam.nl         */
+/*   Created: 2020/03/06 13:43:19 by jbennink      #+#    #+#                 */
+/*   Updated: 2020/06/02 16:30:03 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ static int	writeheader(t_var var, int fd)
 static void	createimg(t_var var, t_data *img)
 {
 	img->img = mlx_new_image(var.mlx, var.width, var.height);
+	if (!img->img)
+		errormsg("mlx image error");
 	img->addr = mlx_get_data_addr(img->img, &img->bpp,
 									&img->line_length, &img->endian);
 	drawimg(&var, &*img);

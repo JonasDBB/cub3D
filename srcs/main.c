@@ -5,13 +5,12 @@
 /*                                                     +:+                    */
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/01/28 15:50:26 by jbennink       #+#    #+#                */
-/*   Updated: 2020/03/12 17:14:40 by jbennink      ########   odam.nl         */
+/*   Created: 2020/01/28 15:50:26 by jbennink      #+#    #+#                 */
+/*   Updated: 2020/06/03 14:05:04 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-#include <stdio.h>
 
 static void	dead(t_var *var)
 {
@@ -35,6 +34,8 @@ static int	renderframe(t_var *var)
 	if (var->player.moved == 0)
 		return (1);
 	img.img = mlx_new_image(var->mlx, var->width, var->height);
+	if (!img.img)
+		errormsg("mlx image error");
 	img.addr = mlx_get_data_addr(img.img, &img.bpp,
 									&img.line_length, &img.endian);
 	drawimg(&*var, &img);
@@ -50,39 +51,23 @@ static int	renderframe(t_var *var)
 	return (1);
 }
 
-static void	createtexture(t_var *var)
+static void	checkmap(char *s)
 {
-	preptextures(*&var);
-	checkpaths(var->input);
-	var->tex.no.img = mlx_png_file_to_image(var->mlx,
-			var->input.notexture, &var->tex.no.texw, &var->tex.no.texh);
-	var->tex.no.addr = mlx_get_data_addr(var->tex.no.img,
-			&var->tex.no.bpp, &var->tex.no.line_length, &var->tex.no.endian);
-	var->tex.ea.img = mlx_png_file_to_image(var->mlx,
-			var->input.eatexture, &var->tex.ea.texw, &var->tex.ea.texh);
-	var->tex.ea.addr = mlx_get_data_addr(var->tex.ea.img,
-			&var->tex.ea.bpp, &var->tex.ea.line_length, &var->tex.ea.endian);
-	var->tex.so.img = mlx_png_file_to_image(var->mlx,
-			var->input.sotexture, &var->tex.so.texw, &var->tex.so.texh);
-	var->tex.so.addr = mlx_get_data_addr(var->tex.so.img,
-			&var->tex.so.bpp, &var->tex.so.line_length, &var->tex.so.endian);
-	var->tex.we.img = mlx_png_file_to_image(var->mlx,
-			var->input.wetexture, &var->tex.we.texw, &var->tex.we.texh);
-	var->tex.we.addr = mlx_get_data_addr(var->tex.we.img,
-			&var->tex.we.bpp, &var->tex.we.line_length, &var->tex.we.endian);
-	var->tex.sp.img = mlx_png_file_to_image(var->mlx,
-			var->input.spritetex, &var->tex.sp.texw, &var->tex.sp.texh);
-	var->tex.sp.addr = mlx_get_data_addr(var->tex.sp.img,
-			&var->tex.sp.bpp, &var->tex.sp.line_length, &var->tex.sp.endian);
-}
-
-static void	setup(t_var *var, char *s)
-{
+	int	fd;
 	int	i;
 
 	i = ft_strlen(s) - 1;
 	if (s[i - 3] != '.' || s[i - 2] != 'c' || s[i - 1] != 'u' || s[i] != 'b')
 		errormsg("inputfile not .cub");
+	fd = open(s, O_RDONLY);
+	if (fd == -1)
+		errormsg("map doesn't exist");
+	close(fd);
+}
+
+static void	setup(t_var *var, char *s)
+{
+	checkmap(s);
 	var->map.file = s;
 	var->sprites.count = 0;
 	mlx_get_screen_size(var->mlx, &var->screenres.x, &var->screenres.y);
@@ -100,6 +85,8 @@ static void	setup(t_var *var, char *s)
 	var->dead = 0;
 	setup_sprites(&*var);
 	var->mlx = mlx_init();
+	if (!var->mlx)
+		errormsg("mlx error");
 	createtexture(&*var);
 }
 

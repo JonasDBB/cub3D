@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/02/14 14:20:38 by jbennink       #+#    #+#                */
-/*   Updated: 2020/03/09 15:09:17 by jbennink      ########   odam.nl         */
+/*   Created: 2020/02/14 14:20:38 by jbennink      #+#    #+#                 */
+/*   Updated: 2020/06/03 14:04:02 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ void		errormsg(char *reason);
 void		preptextures(t_var *var);
 void		checkpaths(t_input input);
 t_data		deathscreen(t_var *var);
+void		createtexture(t_var *var);
 
 #endif

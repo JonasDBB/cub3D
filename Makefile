@@ -5,8 +5,8 @@
 #                                                      +:+                     #
 #    By: jbennink <jbennink@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
-#    Created: 2020/03/06 15:08:36 by jbennink       #+#    #+#                 #
-#    Updated: 2020/03/12 17:17:50 by jbennink      ########   odam.nl          #
+#    Created: 2020/03/06 15:08:36 by jbennink      #+#    #+#                  #
+#    Updated: 2020/06/03 14:04:41 by jbennink      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,8 @@ parse_map.c \
 parse_set_values.c \
 parse_utils.c \
 raycast.c \
-sprites.c
+sprites.c \
+extra_functions.c
 
 SRCS = $(addprefix srcs/, $(_SRCS))
 

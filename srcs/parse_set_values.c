@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/02/17 16:51:57 by jbennink       #+#    #+#                */
-/*   Updated: 2020/03/09 15:20:38 by jbennink      ########   odam.nl         */
+/*   Created: 2020/02/17 16:51:57 by jbennink      #+#    #+#                 */
+/*   Updated: 2020/06/03 15:24:39 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,21 @@ void	setres(t_var *var)
 	while (var->map.line[i] == ' ')
 		i++;
 	var->width = ft_atoi(var->map.line + i);
+	i += digits(var->width);
 	if (var->width > var->screenres.x && !var->save)
 		var->width = var->screenres.x;
-	while (var->map.line[i] != ' ')
-		i++;
 	while (var->map.line[i] == ' ')
 		i++;
+	if (var->map.line[i] == '\0' || var->width == 0)
+		errormsg("error1 in res");
 	var->height = ft_atoi(var->map.line + i);
+	i += digits(var->height);
 	if (var->height > var->screenres.y - 45 && !var->save)
 		var->height = var->screenres.y - 45;
+	while (var->map.line[i] == ' ')
+		i++;
+	if (var->map.line[i] != '\0' || var->height == 0)
+		errormsg("error2 in res");
 }
 
 void	settexture(char **dst, char *src, int i)

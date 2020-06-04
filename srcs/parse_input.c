@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/02/14 14:23:43 by jbennink       #+#    #+#                */
-/*   Updated: 2020/03/06 16:26:06 by jbennink      ########   odam.nl         */
+/*   Created: 2020/02/14 14:23:43 by jbennink      #+#    #+#                 */
+/*   Updated: 2020/06/03 14:09:56 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ static void	getlines(t_var *var)
 	var->input.spritetex = NULL;
 	var->input.clrceiling = -1;
 	var->input.clrfloor = -1;
+	var->height = -1;
+	var->width = -1;
+	var->map.h = 0;
 	while (get_next_line(var->map.fd, &(var->map.line)) == 1)
 	{
 		if (mapstart(*&var))
@@ -80,6 +83,8 @@ static void	checkend(t_var *var)
 	int	gnl;
 	int	i;
 
+	if (var->map.line[0] != '\0')
+		errormsg("stuff after map");
 	gnl = get_next_line(var->map.fd, &(var->map.line));
 	while ((var->map.line[0] == '\0' || var->map.line[0] == ' ') && gnl == 1)
 	{
@@ -99,20 +104,21 @@ static void	checkend(t_var *var)
 void		readinput(t_var *var)
 {
 	int	gnl;
+	int	i;
 
 	gnl = 1;
 	var->map.fd = open(var->map.file, O_RDONLY);
-	var->height = -1;
-	var->width = -1;
-	var->map.h = 0;
 	var->map.maxw = 0;
 	getlines(&*var);
 	while (gnl > -1)
 	{
 		gnl = get_next_line(var->map.fd, &(var->map.line));
-		if (var->map.line[0] == '\0' || gnl == 0)
+		i = 0;
+		while (var->map.line[i] == ' ')
+			i++;
+		if (var->map.line[i] <= '0' || var->map.line[i] >= '2' || gnl == 0)
 		{
-			if (var->map.line[0] != '\0')
+			if (var->map.line[i] != '\0')
 				var->map.h++;
 			free(var->map.line);
 			break ;

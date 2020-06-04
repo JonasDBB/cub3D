@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/02/20 19:47:02 by jbennink       #+#    #+#                */
-/*   Updated: 2020/03/09 15:33:28 by jbennink      ########   odam.nl         */
+/*   Created: 2020/02/20 19:47:02 by jbennink      #+#    #+#                 */
+/*   Updated: 2020/06/02 16:29:50 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ static void	createimgs(t_var *var, t_data *img, t_data *youdied)
 {
 	var->dead = 1;
 	img->img = mlx_new_image(var->mlx, var->width, var->height);
+	if (!img->img)
+		errormsg("mlx image error");
 	img->addr = mlx_get_data_addr(img->img, &img->bpp,
 									&img->line_length, &img->endian);
 	youdied->img = mlx_png_file_to_image(var->mlx, "./pics/youdied.png",
