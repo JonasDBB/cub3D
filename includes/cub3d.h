@@ -6,7 +6,7 @@
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/14 14:20:38 by jbennink      #+#    #+#                 */
-/*   Updated: 2020/06/03 14:04:02 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/06/08 15:01:45 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,7 @@ void		preptextures(t_var *var);
 void		checkpaths(t_input input);
 t_data		deathscreen(t_var *var);
 void		createtexture(t_var *var);
+void		checkset(t_var *var);
+void		finishcheck(t_var *var);
 
 #endif

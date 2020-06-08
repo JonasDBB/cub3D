@@ -6,7 +6,7 @@
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/14 14:23:43 by jbennink      #+#    #+#                 */
-/*   Updated: 2020/06/03 14:09:56 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/06/08 15:43:16 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,25 @@ static void	fillinput(t_var *var)
 	if (var->map.line[0] == 'R')
 		setres(&*var);
 	else if (var->map.line[0] == 'N' && var->map.line[1] == 'O')
-		settexture(&var->input.notexture, var->map.line, 2);
+		settexture(&var->input.notexture, var->map.line, 2, &var->check.north);
 	else if (var->map.line[0] == 'E' && var->map.line[1] == 'A')
-		settexture(&var->input.eatexture, var->map.line, 2);
+		settexture(&var->input.eatexture, var->map.line, 2, &var->check.east);
 	else if (var->map.line[0] == 'S' && var->map.line[1] == 'O')
-		settexture(&var->input.sotexture, var->map.line, 2);
+		settexture(&var->input.sotexture, var->map.line, 2, &var->check.south);
 	else if (var->map.line[0] == 'W' && var->map.line[1] == 'E')
-		settexture(&var->input.wetexture, var->map.line, 2);
+		settexture(&var->input.wetexture, var->map.line, 2, &var->check.west);
 	else if (var->map.line[0] == 'S')
-		settexture(&var->input.spritetex, var->map.line, 1);
+		settexture(&var->input.spritetex, var->map.line, 1, &var->check.sprite);
 	else if (var->map.line[0] == 'F')
+	{
+		var->check.floor = 1;
 		setcolor(var->map.line, &var->input.clrfloor, 1);
+	}
 	else if (var->map.line[0] == 'C')
+	{
+		var->check.ceiling = 1;
 		setcolor(var->map.line, &var->input.clrceiling, 1);
+	}
 	else
 		errormsg("unknown input");
 }

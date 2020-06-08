@@ -6,7 +6,7 @@
 #    By: jbennink <jbennink@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/03/06 15:08:36 by jbennink      #+#    #+#                  #
-#    Updated: 2020/06/08 13:13:39 by jbennink      ########   odam.nl          #
+#    Updated: 2020/06/08 16:49:13 by jbennink      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,10 +47,10 @@ all: $(NAME)
 
 objects/%.o: srcs/%.c
 	@mkdir -p objects
-	gcc -g $(FLAGS) -I $(INCLUDES) -c $< -o $@
+	gcc $(FLAGS) -I $(INCLUDES) -c $< -o $@
 
 $(NAME): $(MINILIB) $(LIBFT) $(OBJS)
-	gcc -g $(FLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(MINILIB)
+	gcc $(FLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(MINILIB)
 
 clean:
 	rm -f $(OBJS)

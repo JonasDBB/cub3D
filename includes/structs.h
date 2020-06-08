@@ -6,7 +6,7 @@
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/14 14:42:55 by jbennink      #+#    #+#                 */
-/*   Updated: 2020/06/03 14:11:16 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/06/08 15:40:31 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,17 @@ typedef struct	s_sprvars {
 	t_intcrd	tex;
 }				t_sprvars;
 
+typedef struct	s_check {
+	int			north;
+	int			east;
+	int			south;
+	int			west;
+	int			sprite;
+	int			res;
+	int			floor;
+	int			ceiling;
+}				t_check;
+
 typedef struct	s_var {
 	void		*mlx;
 	void		*win;
@@ -127,6 +138,7 @@ typedef struct	s_var {
 	int			mousex;
 	int			save;
 	t_intcrd	screenres;
+	t_check		check;
 }				t_var;
 
 typedef struct	s_minimap {

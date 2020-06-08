@@ -6,7 +6,7 @@
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/28 15:50:26 by jbennink      #+#    #+#                 */
-/*   Updated: 2020/06/04 15:24:05 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/06/08 15:02:05 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,13 @@ static void	checkmap(char *s)
 static void	setup(t_var *var, char *s)
 {
 	checkmap(s);
+	checkset(&*var);
 	var->map.file = s;
 	var->sprites.count = 0;
 	mlx_get_screen_size(var->mlx, &var->screenres.x, &var->screenres.y);
 	readinput(&*var);
 	readmap(&*var);
+	finishcheck(&*var);
 	var->player.pos.x += 0.5;
 	var->player.pos.y += 0.5;
 	var->basespeed = 1;

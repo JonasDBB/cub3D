@@ -6,7 +6,7 @@
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/14 14:33:36 by jbennink      #+#    #+#                 */
-/*   Updated: 2020/06/03 14:11:13 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/06/08 15:43:21 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		mapline(t_var var);
 int		digits(unsigned long n);
 
 void	setres(t_var *var);
-void	settexture(char **dst, char *src, int i);
+void	settexture(char **dst, char *src, int i, int *check);
 void	setcolor(char *line, int *clr, int i);
 void	setdir(t_var *var);
 void	setvector(t_coord *a, double i, double j);

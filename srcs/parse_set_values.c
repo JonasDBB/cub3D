@@ -6,7 +6,7 @@
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/17 16:51:57 by jbennink      #+#    #+#                 */
-/*   Updated: 2020/06/03 15:24:39 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/06/08 15:53:54 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	setres(t_var *var)
 	int	i;
 
 	i = 0;
+	var->check.res = 1;
 	if (var->width != -1 || var->height != -1)
 		errormsg("multiple inputs");
 	i++;
@@ -40,10 +41,11 @@ void	setres(t_var *var)
 		errormsg("error2 in res");
 }
 
-void	settexture(char **dst, char *src, int i)
+void	settexture(char **dst, char *src, int i, int *check)
 {
 	if (*dst != NULL)
 		errormsg("too many inputs texture");
+	*check = 1;
 	while (src[i] == ' ')
 		i++;
 	if (src[i] != '.')
@@ -70,12 +72,12 @@ void	setcolor(char *line, int *clr, int i)
 	r = ft_atoi(line + i);
 	i += digits(r);
 	if (line[i] != ',' || !ft_isdigit(line[i + 1]))
-		errormsg("comma issue color");
+		errormsg("issue color");
 	i++;
 	g = ft_atoi(line + i);
 	i += digits(g);
 	if (line[i] != ',' || !ft_isdigit(line[i + 1]))
-		errormsg("comma issue color");
+		errormsg("issue color");
 	i++;
 	b = ft_atoi(line + i);
 	i += digits(b);
