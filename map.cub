@@ -1,4 +1,6 @@
-R 26000 20000
+R 1920 1080
+
+
 NO ./pics/redbrick.png
 SO ./pics/colorstone.png
 WE ./pics/bluestone.png
