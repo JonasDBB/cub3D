@@ -6,7 +6,7 @@
 #    By: jbennink <jbennink@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/03/06 15:08:36 by jbennink      #+#    #+#                  #
-#    Updated: 2020/06/03 14:04:41 by jbennink      ########   odam.nl          #
+#    Updated: 2020/06/08 13:13:39 by jbennink      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ LIBFT = libft/libft.a
 
 MINILIB = libmlx.dylib
 
-FLAGS = -Wall -Wextra -Werror -O3
+FLAGS = -Wall -Wextra -Werror
 
 INCLUDES = includes/
 
@@ -47,10 +47,10 @@ all: $(NAME)
 
 objects/%.o: srcs/%.c
 	@mkdir -p objects
-	gcc $(FLAGS) -I $(INCLUDES) -c $< -o $@
+	gcc -g $(FLAGS) -I $(INCLUDES) -c $< -o $@
 
 $(NAME): $(MINILIB) $(LIBFT) $(OBJS)
-	gcc $(FLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(MINILIB)
+	gcc -g $(FLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(MINILIB)
 
 clean:
 	rm -f $(OBJS)

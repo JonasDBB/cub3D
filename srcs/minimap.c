@@ -6,7 +6,7 @@
 /*   By: jbennink <jbennink@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/20 11:00:22 by jbennink      #+#    #+#                 */
-/*   Updated: 2020/06/02 16:43:59 by jbennink      ########   odam.nl         */
+/*   Updated: 2020/06/08 13:29:14 by jbennink      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ void				drawminimap(t_var *var, t_data *img)
 		mini.i = var->map.h - mini.maxsqh;
 	if (mini.i < 0)
 		mini.i = 0;
-	while (mini.y < mini.maxsqh * mini.sqwidth + mini.offset)
+	while (mini.y < mini.maxsqh * mini.sqwidth + mini.offset
+		&& mini.i < var->map.h)
 		drawmap(&*var, &*img, &mini);
 	drawlife(*var, &*img);
 }
